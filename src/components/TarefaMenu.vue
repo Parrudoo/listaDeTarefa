@@ -10,7 +10,7 @@
         <v-list-item
           v-for="(item, index) in items"
           :key="index"
-          @click="isOpen = true"
+          @click="abrirDialog(item.type)"
         >
           <v-icon left>{{ item.icon }}</v-icon>
           <v-list-item-title>{{ item.title }}</v-list-item-title>
@@ -18,26 +18,50 @@
       </v-list>
     </v-menu>
     <DialogEditar :isOpen.sync="isOpen" />
+    <DialogExcluir :isOpenExcluir.sync="isOpenExcluir" :tarefa="tarefa" />
   </div>
 </template>
 <script>
-import DialogEditar from "./DialogEditar.vue";
+import DialogEditar from "./dialog/DialogEditar.vue";
+import DialogExcluir from "./dialog/DialogExcluir.vue";
 export default {
-  components: { DialogEditar },
+  components: { DialogEditar, DialogExcluir },
+
+  props:{
+    tarefa:{
+      type:[],
+    
+    }
+    
+  },
+
   data: () => ({
     isOpen: false,
+    isOpenExcluir: false,
     items: [
       {
         title: "Editar",
         icon: "mdi mdi-pencil",
+        type: "edit",
       },
 
       {
         title: "Excluir",
         icon: "mdi mdi-trash-can",
+        type: "delete",
       },
     ],
   }),
- 
+  methods: {
+    abrirDialog(type) {
+      if (type === "edit") {
+        this.isOpen = true;
+        console.log(this.tarefa,"tarefa aqui")
+      } else if (type === "delete") {
+        this.isOpenExcluir = true;
+      }
+    }, 
+   
+  },
 };
 </script>

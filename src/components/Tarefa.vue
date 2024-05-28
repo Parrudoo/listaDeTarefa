@@ -18,8 +18,8 @@
           </v-list-item-content>
 
           <v-list-item-action>
-          <TarefaMenu/>
-          </v-list-item-action>         
+            <TarefaMenu :tarefa="tarefa" />
+          </v-list-item-action>
         </template>
       </v-list-item>
     </v-list-item-group>
@@ -27,10 +27,10 @@
 </template>
 
 <script>
-import TarefaMenu from './TarefaMenu.vue';
+import TarefaMenu from "./TarefaMenu.vue";
 
 export default {
-  components: {  TarefaMenu },
+  components: { TarefaMenu },
   name: "TarefaPAge",
 
   props: ["tarefa"],
@@ -47,15 +47,9 @@ export default {
   methods: {
     updateTarefa() {
       this.fake.concluido = !this.fake.concluido;
-      console.log(this.fake.concluido);
     },
     removerTarefa(id) {
       this.$store.commit("removeTarefa", id);
-    },
-
-    abrirDialog() {
-      this.dialog = true;
-      // console.log(this.dialog)
     },
   },
 };
