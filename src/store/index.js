@@ -20,7 +20,6 @@ export default new Vuex.Store({
       }
     },
     removeTarefa(state, id) {
-
       state.tarefas = state.tarefas.filter(tarefa => tarefa.id != id)
     }
   },

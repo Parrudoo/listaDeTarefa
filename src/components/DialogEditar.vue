@@ -30,19 +30,22 @@ export default {
       required: true,
     },
   },
-  computed: {
-    localAbrir: {
-      get() {
-        return this.isOpen;
-      },
-      set(value) {
-        this.$emit("update:isOpen", value);
-      },
-    },
+  data() {
+    return {
+      localAbrir: this.isOpen,
+    };
+  },
+  watch:{
+    isOpen(value){
+      this.localAbrir = value
+    }
+
   },
   methods: {
     closeDialog() {
       this.localAbrir = false;
+      this.$emit('update:isOpen', false)
+
     },
   },
 };

@@ -18,12 +18,8 @@
           </v-list-item-content>
 
           <v-list-item-action>
-            <!-- @click.stop="removerTarefa(tarefa.id)" -->
-            <v-btn icon  @click="dialog = true">             
-                <v-icon>mdi-dots-vertical</v-icon>  
-              </v-btn>
-            </v-list-item-action>          
-            <DialogEditar :isOpen.sync="dialog"/> 
+          <TarefaMenu/>
+          </v-list-item-action>         
         </template>
       </v-list-item>
     </v-list-item-group>
@@ -31,34 +27,37 @@
 </template>
 
 <script>
-import DialogEditar from './DialogEditar.vue';
+import TarefaMenu from './TarefaMenu.vue';
 
 export default {
-  components: { DialogEditar },
-    name: "TarefaPAge",
-    
-    props: ["tarefa"],
-    data() {
-        return {
-          dialog:false,
-            fake: { ...this.tarefa },
-        };
-    },
-    methods: {
-        updateTarefa() {
-            this.fake.concluido = !this.fake.concluido;
-            console.log(this.fake.concluido);
-        },
-        removerTarefa(id) {
-            this.$store.commit("removeTarefa", id);
-        },
+  components: {  TarefaMenu },
+  name: "TarefaPAge",
 
-        abrirDialog(){
-          this.dialog = true;
-          // console.log(this.dialog)
-        }
+  props: ["tarefa"],
+  data() {
+    return {
+      dialog: false,
+      fake: { ...this.tarefa },
+    };
+  },
+  items: [
+    { title: "Editar", icon: "mdi-dots-vertical" },
+    { title: "Excluir", icon: "mdi-dots-vertical" },
+  ],
+  methods: {
+    updateTarefa() {
+      this.fake.concluido = !this.fake.concluido;
+      console.log(this.fake.concluido);
     },
-  
+    removerTarefa(id) {
+      this.$store.commit("removeTarefa", id);
+    },
+
+    abrirDialog() {
+      this.dialog = true;
+      // console.log(this.dialog)
+    },
+  },
 };
 </script>
 
