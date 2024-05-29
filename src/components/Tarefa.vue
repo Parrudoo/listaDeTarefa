@@ -32,6 +32,7 @@ import TarefaMenu from "./TarefaMenu.vue";
 export default {
   components: { TarefaMenu },
   name: "TarefaPAge",
+  
 
   props: ["tarefa"],
   data() {

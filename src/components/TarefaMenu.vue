@@ -17,7 +17,7 @@
         </v-list-item>
       </v-list>
     </v-menu>
-    <DialogEditar :isOpen.sync="isOpen" />
+    <DialogEditar :isOpen.sync="isOpen" :tarefa="tarefa" />
     <DialogExcluir :isOpenExcluir.sync="isOpenExcluir" :tarefa="tarefa" />
   </div>
 </template>
@@ -55,8 +55,7 @@ export default {
   methods: {
     abrirDialog(type) {
       if (type === "edit") {
-        this.isOpen = true;
-        console.log(this.tarefa,"tarefa aqui")
+        this.isOpen = true;        
       } else if (type === "delete") {
         this.isOpenExcluir = true;
       }

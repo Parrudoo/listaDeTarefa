@@ -1,7 +1,8 @@
 <template>
   <div>
     <v-col cols="12" sm="6" md="3">
-      <v-text-field v-model="campoInput"
+      <v-text-field
+        v-model="campoInput"
         label="Inserir Tarefa"
         @keyup.enter="addTarefa"
       ></v-text-field>
@@ -30,9 +31,9 @@ export default {
   }),
   methods: {
     addTarefa() {
-    this.$store.commit('addTarefa',this.campoInput)
-    }
-  }
+      this.$store.commit("addTarefa", this.campoInput);
+    },
+  },
 };
 Tarefa;
 </script>
