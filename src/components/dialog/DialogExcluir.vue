@@ -10,8 +10,8 @@
         <v-btn color="green darken-1" text @click="closeDialog()">
           Cancelar
         </v-btn>
-        <v-btn color="green darken-1" text @click="closeDialog()">
-          Concluir
+        <v-btn color="green darken-1" text @click="removerTarefa(localAbrir.id)">
+          Excluir
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -45,8 +45,11 @@ export default {
       this.localAbrir = false;
       this.$emit("update:isOpenExcluir", false);
     },
-    removerTarefa(id) {
-      this.$store.commit("removeTarefa", id);
+    removerTarefa() {
+      this.$store.commit("removeTarefa", this.tarefa.id);
+      console.log(this.tarefa)
+
+      
     },
   },
 };

@@ -32,6 +32,7 @@ export default {
   methods: {
     addTarefa() {
       this.$store.commit("addTarefa", this.campoInput);
+      console.log(this.campoInput)
     },
   },
 };

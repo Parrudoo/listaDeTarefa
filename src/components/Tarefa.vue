@@ -4,13 +4,13 @@
       <v-list-item @click="updateTarefa">
         <template v-slot:default="{}">
           <v-list-item-action>
-            <v-checkbox :input-value="fake.concluido"></v-checkbox>
+            <v-checkbox :input-value="tarefa.concluido"></v-checkbox>
           </v-list-item-action>
 
           <v-list-item-content>
             <div
               :class="{
-                'text-decoration-line-through': fake.concluido,
+                'text-decoration-line-through': tarefa.concluido,
               }"
             >
               <v-list-item-title>{{ tarefa.titulo }}</v-list-item-title>
@@ -32,13 +32,10 @@ import TarefaMenu from "./TarefaMenu.vue";
 export default {
   components: { TarefaMenu },
   name: "TarefaPAge",
-  
-
   props: ["tarefa"],
   data() {
     return {
-      dialog: false,
-      fake: { ...this.tarefa },
+      dialog: false,     
     };
   },
   items: [
@@ -47,7 +44,7 @@ export default {
   ],
   methods: {
     updateTarefa() {
-      this.fake.concluido = !this.fake.concluido;
+      this.tarefa.concluido = !this.tarefa.concluido;
     },
     removerTarefa(id) {
       this.$store.commit("removeTarefa", id);
