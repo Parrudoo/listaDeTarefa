@@ -1,5 +1,5 @@
 <template>
-    <h1>Pagina Sobre</h1>
+    <h2>Sistema de cadastro de tarefas feito em vue js</h2>
 </template>
 
 <script>
