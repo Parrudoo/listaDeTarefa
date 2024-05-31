@@ -21,7 +21,7 @@
             <div v-for="(tarefa, index) in tarefas" :key="index">
               <Tarefa :tarefa="tarefa" />
             </div>
-            <component :is="item.component" />
+            <component :is="item.component"/>
           </v-list>
         </v-card>
       </v-tab-item>
