@@ -4,12 +4,12 @@
       <v-text-field
         v-model="campoInput"
         label="Inserir Tarefa"
-        @keyup.enter="addTarefa"
+        @keyup.enter="addTarefa()"
       ></v-text-field>
     </v-col>
     <v-list flat subheader>
       <v-subheader>Lista de tarefas</v-subheader>
-      <div v-for="(tarefa, index) in $store.state.tarefas" :key="index">
+      <div v-for="(tarefa, index) in tarefas" :key="index">
         <Tarefa :tarefa="tarefa" />
       </div>
     </v-list>
@@ -19,6 +19,7 @@
 
 <script>
 import Tarefa from "@/components/Tarefa.vue";
+import axios from "axios";
 
 export default {
   name: "PageHome",
@@ -31,8 +32,20 @@ export default {
   }),
   methods: {
     addTarefa() {
-      this.$store.commit("addTarefa", this.campoInput);
-      this.campoInput = null
+      // this.$store.commit("addTarefa", this.campoInput);
+      // this.campoInput = null;
+      axios
+        .post("http://localhost:8081/tarefa/salvar", {
+          titulo: this.campoInput,
+        })
+        .then((resp) => {
+          console.log(resp);
+        });
+    },
+    getTarefa() {
+      axios.get("http://localhost:8081/tarefa/listar").then((resp) => {
+        this.tarefas = resp.data;
+      });
     },
   },
 };
