@@ -1,3 +1,4 @@
+//  eslint-disable 
 module.exports = {
   root: true,
   env: {
@@ -12,6 +13,7 @@ module.exports = {
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    'vue/no-mutating-props':'off'
+    'vue/no-mutating-props':'off',
+    'my-custom-rule': 'off'
   }
 }

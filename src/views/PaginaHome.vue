@@ -1,12 +1,13 @@
+/* eslint-disable */
 <template>
   <div>
     <v-toolbar color="light-blue" dark flat>
       <v-spacer></v-spacer>
       <template v-slot:extension>
         <v-tabs v-model="tab" align-with-title>
-          <v-tabs-slider color="yellow"></v-tabs-slider>
+          <v-tabs-slider  color="yellow"></v-tabs-slider>
 
-          <v-tab v-for="item in items" :key="item.titulo">
+          <v-tab  v-for="item in items" :key="item.titulo">
             {{ item.titulo }}
           </v-tab>
         </v-tabs>
@@ -34,6 +35,7 @@
 import Tarefa from "@/components/Tarefa.vue";
 import axios from "axios";
 import FormCadTarefaVue from "@/components/CadTarefa/FormCadTarefa.vue";
+import DataTableTarefaVue from '@/components/CadTarefa/DataTableTarefa.vue';
 
 export default {
   name: "PageHome",
@@ -46,7 +48,7 @@ export default {
     tab: null,
     items: [
       { titulo: "Cadastro de Tarefa", component: FormCadTarefaVue },
-      { titulo: "teste", component: null },
+      { titulo: "Listar Tarefa", component: DataTableTarefaVue },
     ],
   }),
   methods: {
@@ -66,6 +68,7 @@ export default {
         this.tarefas = resp.data;
       });
     },
+    
   },
 };
 Tarefa;
