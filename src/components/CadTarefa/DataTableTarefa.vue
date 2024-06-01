@@ -152,8 +152,7 @@ export default {
       });
     },
 
-    editItem(item) {
-      console.log(item, "item aqui");
+    editItem(item) {           
       this.editedIndex = this.tarefas.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
