@@ -12,47 +12,32 @@
         <v-spacer></v-spacer>
         <!-- dialog -->
         <v-dialog v-model="dialog" max-width="500px">
+          <!-- O activator é usado para fornecer um gatilho para execução de um componente como um botão ou link -->
           <template v-slot:activator="{ on, attrs }">
             <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
               Nova tarefa
+            </v-btn>
+            <v-btn color="primary" dark class="mb-2 mr-2" @click="initialize">
+              Consultar
             </v-btn>
           </template>
           <v-card>
             <v-card-title>
               <span class="text-h5">{{ formTitle }}</span>
             </v-card-title>
-
             <v-card-text>
               <v-container>
                 <v-row>
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field
-                      v-model="editedItem.name"
+                      v-model="editedItem.titulo"
                       label="Dessert name"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field
-                      v-model="editedItem.calories"
+                      v-model="editedItem.descricao"
                       label="Calories"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field
-                      v-model="editedItem.fat"
-                      label="Fat (g)"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field
-                      v-model="editedItem.carbs"
-                      label="Carbs (g)"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field
-                      v-model="editedItem.protein"
-                      label="Protein (g)"
                     ></v-text-field>
                   </v-col>
                 </v-row>
@@ -66,6 +51,7 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
+
         <v-dialog v-model="dialogDelete" max-width="500px">
           <v-card>
             <v-card-title class="text-h5"
@@ -87,12 +73,12 @@
     </template>
     <!-- Disable the rule for the next line -->
     <!-- eslint-disable-next-line vue/valid-v-slot -->
-    <template v-slot:item.actions="{ item }">
+    <template v-slot:item.acao="{ item }">
       <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
       <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
     </template>
     <template v-slot:no-data>
-      <v-btn color="primary" @click="initialize"> Reset </v-btn>
+      <!-- <v-btn color="primary" @click="initialize"> Reset </v-btn> -->
     </template>
   </v-data-table>
 </template>
@@ -110,22 +96,25 @@ export default {
         value: "titulo",
       },
       { text: "Descricao", value: "descricao" },
-      { text: "Actions", value: "actions", sortable: false },
+      { text: "Ação", value: "acao", sortable: false },
     ],
 
     tarefas: [],
+   
 
     editedIndex: -1,
     editedItem: {
+      id: "",
       titulo: "",
-      descricao: 0,
+      descricao: "",
     },
     defaultTarefa: {
+      id: "",
       titulo: "",
-      descricao: 0,
+      descricao: "",
     },
   }),
-
+ 
   computed: {
     formTitle() {
       return this.editedIndex === -1 ? "Nova tarefa" : "Editar tarefa";
@@ -152,8 +141,9 @@ export default {
       });
     },
 
-    editItem(item) {           
+    editItem(item) {
       this.editedIndex = this.tarefas.indexOf(item);
+      // cria uma copia ou um clone de um objeto java script
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
@@ -187,10 +177,31 @@ export default {
 
     save() {
       if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem);
+       axios
+          .put(
+            `http://localhost:8081/tarefa/atualizar/${
+              this.tarefas[this.editedIndex].id
+            }`,
+            this.editedItem,
+            {
+              config: {
+                "Content-Type":"application/json",
+              },
+            }
+          )
+          .then((resp) => {
+            this.initialize()
+          });
       } else {
-        this.desserts.push(this.editedItem);
-      }
+        axios.put('http://localhost:8081/tarefa/salvar',this.editItem,{
+          config:{
+            "Content-Type":"application/json",
+          }
+        }).then(resp =>{
+          this.initialize()
+        })
+      }    
+      
       this.close();
     },
   },
